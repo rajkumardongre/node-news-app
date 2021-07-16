@@ -10,6 +10,5 @@ const newsData = (pageNo, callback) => {
       callback(body);
     }
   });
-  console.log("-----------------------------------------");
 };
 module.exports = newsData;

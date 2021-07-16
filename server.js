@@ -6,6 +6,7 @@ const hbs = require("hbs");
 const newsData = require(`${__dirname}/newsData`);
 
 const app = express();
+const port = process.env.PORT || 8000;
 
 // Paths setup
 const publicDirPath = path.join(__dirname, "/public");
@@ -34,10 +35,9 @@ app.get("/contact", (req, res) => {
 app.get("/api", (req, res) => {
   newsData(1, (data) => {
     res.send(data);
-    console.log("==============");
   });
 });
 
-app.listen(8000, () => {
-  console.log("Listening to the port 8000...");
+app.listen(port, () => {
+  console.log(`Listening to the port ${port}...`);
 });

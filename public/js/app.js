@@ -1,8 +1,7 @@
 const mainContainer = document.querySelector(".main");
 
 async function generateNews(pageNo) {
-  // let url = `https://newsapi.org/v2/top-headlines?page=${pageNo}&pageSize=100&country=in&apiKey=1038dc78bdbb49d29e2c9d8d7df13303`;
-  let url = `http://localhost:8000/api`;
+  let url = `/api`;
   const lst = await fetch(url)
     .then((res) => res.json())
     .then((data) => {
@@ -31,7 +30,6 @@ async function generateNews(pageNo) {
     const newsContainer = document.querySelector(".news-container");
 
     newsContainer.addEventListener("click", (e) => {
-      // console.log(e.target.className);
       console.log(e.target.getAttribute("url"));
       window.open(e.target.getAttribute("url"));
     });
