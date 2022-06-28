@@ -1,9 +1,9 @@
 const path = require("path");
+const https = require("https")
 
 const express = require("express");
 const hbs = require("hbs");
 
-const newsData = require(`${__dirname}/newsData`);
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -33,8 +33,29 @@ app.get("/contact", (req, res) => {
 });
 
 app.get("/api", (req, res) => {
-  newsData(1, (data) => {
-    res.send(data);
+  const userAgent = req.get('user-agent');
+  const options = {
+      host: 'newsapi.org',
+      path: '/v2/top-headlines?page=1&pageSize=100&country=in&apiKey=1038dc78bdbb49d29e2c9d8d7df13303',
+      headers: {
+          'User-Agent': userAgent
+      }
+  }
+  https.get(options, function (response) {
+      let data;
+      response.on('data', function (chunk) {
+          if (!data) {
+              data = chunk;
+          }
+          else {
+              data += chunk;
+          }
+      });
+      response.on('end', function () {
+          const newsData = JSON.parse(data);
+          // console.log(newsData);
+          res.send(newsData)
+      });
   });
 });
 
